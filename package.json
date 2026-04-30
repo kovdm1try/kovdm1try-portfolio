@@ -6,9 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint .",
+    "lint:styles": "stylelint \"**/*.{css,scss}\"",
+    "lint:fix": "eslint . --fix && stylelint \"**/*.{css,scss}\" --fix && prettier --write .",
+    "lint:all": "npm run lint && npm run lint:styles && npm run format",
+    "format": "prettier --check .",
+    "format:write": "prettier --write ."
   },
   "dependencies": {
+    "motion": "^12.38.0",
     "next": "16.2.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"
@@ -18,9 +24,21 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
+    "eslint-plugin-no-inline-styles": "^1.0.5",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.0",
+    "globals": "^16.4.0",
+    "prettier": "^3.6.2",
+    "postcss-pxtorem": "^6.1.0",
+    "stylelint": "^16.25.0",
+    "stylelint-config-standard": "^39.0.1",
+    "stylelint-order": "^7.0.0",
     "tailwindcss": "^4",
+    "typescript-eslint": "^8.46.2",
     "typescript": "^5"
   }
 }
