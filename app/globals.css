@@ -135,12 +135,6 @@ body {
   line-height: var(--line-height-normal);
 }
 
-*,
-*::before,
-*::after {
-  border-color: var(--border);
-}
-
 ::selection {
   background-color: color-mix(in srgb, var(--primary) 25%, transparent);
   color: var(--foreground);

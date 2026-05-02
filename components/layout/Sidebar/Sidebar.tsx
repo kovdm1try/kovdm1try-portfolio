@@ -13,10 +13,12 @@ interface MenuItemProps {
   title: string;
   icon: ReactNode;
   href: string;
+  setClosed: () => void;
 }
 
 interface NavigationProps {
-  pages: MenuItemProps[];
+  pages: Omit<MenuItemProps, 'setClosed'>[];
+  setClosed: () => void;
 }
 
 interface ToggleButtonProps {
@@ -35,7 +37,7 @@ interface PathProps {
   transition?: { duration: number };
 }
 
-const pages: MenuItemProps[] = [
+const pages: Omit<MenuItemProps, 'setClosed'>[] = [
   { title: 'About', icon: <BsFillPersonBadgeFill />, href: 'about' },
   { title: 'Projects', icon: <FaLaptopCode />, href: 'projects' },
   { title: 'Contacts', icon: <FaPhone />, href: 'contacts' }
@@ -68,8 +70,8 @@ const HoverBGVariants: Variants = {
 };
 
 const NavVariants: Variants = {
-  open: { transition: { delayChildren: stagger(0.07, { startDelay: 0.2 }) } },
-  closed: { transition: { delayChildren: stagger(0.05, { from: 'last' }) } }
+  open: { pointerEvents: 'auto', transition: { delayChildren: stagger(0.07, { startDelay: 0.2 }) } },
+  closed: { pointerEvents: 'none', transition: { delayChildren: stagger(0.05, { from: 'last' }) } }
 };
 
 const ItemsVariants: Variants = {
@@ -89,7 +91,7 @@ const Path: FC<PathProps> = (props) => (
   <motion.path fill="transparent" strokeWidth="3" stroke="var(--primary-contrast)" strokeLinecap="round" {...props} />
 );
 
-const MenuItem: FC<MenuItemProps> = ({ title, icon, href }) => {
+const MenuItem: FC<MenuItemProps> = ({ title, icon, href, setClosed }) => {
   const [isHover, setIsHover] = useState<boolean>(false);
 
   return (
@@ -100,6 +102,7 @@ const MenuItem: FC<MenuItemProps> = ({ title, icon, href }) => {
       whileTap={{ scale: 0.95 }}
       onHoverStart={() => setIsHover(true)}
       onHoverEnd={() => setIsHover(false)}
+      onClick={setClosed}
     >
       <Link href={href} className="flex h-full w-full items-center justify-evenly">
         {icon}
@@ -117,10 +120,10 @@ const MenuItem: FC<MenuItemProps> = ({ title, icon, href }) => {
   );
 };
 
-const Navigation: FC<NavigationProps> = ({ pages }) => (
+const Navigation: FC<NavigationProps> = ({ pages, setClosed }) => (
   <motion.ul className="relative z-5 flex flex-col pt-24 px-6 gap-4" variants={NavVariants}>
     {pages.map(({ title, icon, href }) => (
-      <MenuItem title={title} icon={icon} href={href} key={`sidebar-nav-${href}`} />
+      <MenuItem title={title} icon={icon} href={href} key={`sidebar-nav-${href}`} setClosed={setClosed} />
     ))}
   </motion.ul>
 );
@@ -207,7 +210,7 @@ export const Sidebar = () => {
         transition={{ type: 'spring', stiffness: 400, restDelta: 0.3, damping: 100 }}
       />
       <IconContext.Provider value={{ size: '25', color: 'var(--primary-contrast)' }}>
-        <Navigation pages={pages} />
+        <Navigation pages={pages} setClosed={() => setIsOpened(false)} />
       </IconContext.Provider>
       <ToggleButton
         action={() => setIsOpened((prev) => !prev)}
