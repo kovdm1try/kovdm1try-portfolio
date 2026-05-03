@@ -38,7 +38,7 @@ const Tick: FC<TickProps> = ({ mouseX, mouseY, col, row }) => {
       key={`tick-${col}-row-${row}`}
     >
       <motion.div
-        className="h-[60%] w-[3px] bg-[color-mix(in_srgb,var(--muted-foreground)_30%,transparent)] rounded-full"
+        className="h-[60%] w-[3px] bg-[color-mix(in_srgb,var(--muted-foreground)_30%,transparent)] rounded-[50%]"
         style={{ rotate: smoothRotate }}
       />
     </div>

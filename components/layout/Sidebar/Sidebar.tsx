@@ -108,7 +108,7 @@ interface ToggleButtonProps {
 const ToggleButton: FC<ToggleButtonProps> = ({ setOpen }) => {
   return (
     <motion.button
-      className="z-20 h-[44px] w-[44px] md:h-[60px] md:w-[60px] flex items-center justify-center rounded-full bg-primary cursor-pointer fixed top-[16px] left-[12px] md:top-[24px] md:left-[16px]"
+      className="z-20 h-[44px] w-[44px] md:h-[60px] md:w-[60px] flex items-center justify-center rounded-[50%] bg-primary cursor-pointer fixed top-[16px] left-[12px] md:top-[24px] md:left-[16px]"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       transition={{ type: 'spring', stiffness: 200, damping: 40 }}

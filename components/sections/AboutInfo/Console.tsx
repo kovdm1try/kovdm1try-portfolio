@@ -261,7 +261,7 @@ const Console = () => {
             className="w-[99.3%] p-7 pt-0 bg-[rgb(30,30,30)] rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl rounded-br-2xl md:rounded-tr-none md:rounded-br-none flex flex-col"
           >
             <div className="h-[80px] w-full flex items-center justify-start gap-2">
-              <div className="h-4 aspect-square rounded-full bg-red-500 flex items-center justify-center">
+              <div className="h-4 aspect-square rounded-[50%] bg-red-500 flex items-center justify-center">
                 <div
                   className="h-full w-full flex items-center justify-center cursor-pointer text-red-500 hover:text-red-900 transition-colors duration-200"
                   onClick={() => {
@@ -272,7 +272,7 @@ const Console = () => {
                   <FaXmark className="text-[14px]" />
                 </div>
               </div>
-              <div className="h-4 aspect-square rounded-full bg-yellow-400 flex items-center justify-center">
+              <div className="h-4 aspect-square rounded-[50%] bg-yellow-400 flex items-center justify-center">
                 <div
                   className="h-full w-full flex items-center justify-center cursor-pointer text-yellow-400 hover:text-yellow-900 transition-colors duration-200"
                   onClick={() => {
@@ -284,7 +284,7 @@ const Console = () => {
                 </div>
               </div>
               <div
-                className={`h-4 aspect-square rounded-full flex items-center justify-center ${isMobile ? 'bg-gray-400' : 'bg-green-500'}`}
+                className={`h-4 aspect-square rounded-[50%] flex items-center justify-center ${isMobile ? 'bg-gray-400' : 'bg-green-500'}`}
               >
                 <div
                   className={`h-full w-full flex items-center justify-center transition-colors duration-200 ${isMobile ? 'cursor-not-allowed text-gray-500' : 'cursor-pointer text-green-500 hover:text-green-900'}`}
