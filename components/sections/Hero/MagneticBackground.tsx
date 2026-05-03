@@ -71,8 +71,23 @@ const MagneticBackground = () => {
       mouseY.set(event.clientY - rect.top);
     };
 
-    window.addEventListener('mousemove', mouseMoveHandler);
-    return () => window.removeEventListener('mousemove', mouseMoveHandler);
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          window.addEventListener('mousemove', mouseMoveHandler);
+        } else {
+          window.removeEventListener('mousemove', mouseMoveHandler);
+        }
+      },
+      { threshold: 0 }
+    );
+
+    if (blockRef.current) io.observe(blockRef.current);
+
+    return () => {
+      io.disconnect();
+      window.removeEventListener('mousemove', mouseMoveHandler);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
