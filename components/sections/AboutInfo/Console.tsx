@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { FaMinus } from 'react-icons/fa';
 import { FaXmark } from 'react-icons/fa6';
 import { MdCloseFullscreen, MdOutlineOpenInFull } from 'react-icons/md';
@@ -9,10 +9,10 @@ import { MdArrowBackIos } from 'react-icons/md';
 import * as motion from 'motion/react-client';
 import { Variants } from 'motion/react';
 
-import JsonViewer from '@/components/ui/JsonViewer';
+import { useTypewriter } from '@/hooks/useTypewriter';
 
 const info = {
-  name: 'Ковтунов Дмитрий Алексеевич',
+  name: 'Ковтунов Дмитрий',
   role: 'Frontend Developer',
   location: 'Vladivostok, Russia',
   studying: 'Applied Math & CS @ FEFU',
@@ -28,23 +28,112 @@ const info = {
     'ICPC Far Eastern Russia 2025 — 3rd place',
     'ICPC Northern Eurasia Finals 2023, 2025 — Honorable Mention'
   ],
-
   available: true
 };
 
-const ConsoleVariantsDiv: Variants = {
-  open: {
-    width: '50%',
-    justifyContent: 'flex-end'
+const fullinfo = {
+  name: 'Ковтунов Дмитрий Алексеевич',
+  role: 'Frontend Developer',
+  location: 'Vladivostok, Russia',
+  studying: 'Applied Math & CS @ FEFU, 2022 — present',
+  passion: ['Frontend Development', 'Interactive UI', 'Web Animations'],
+
+  experience: [
+    {
+      company: 'АТБ — Азиатско-Тихоокеанский Банк',
+      role: 'Frontend Developer',
+      period: 'Dec 2025 — Mar 2026',
+      stack: ['TypeScript', 'React', 'MobX', 'TanStack Query', 'TanStack Virtual', 'Webpack 5', 'SCSS', 'Jest']
+    }
+  ],
+  stack: {
+    core: ['TypeScript', 'JavaScript', 'React', 'Next.js'],
+    state: ['MobX', 'RTK Query'],
+    ui: ['Tailwind CSS', 'MUI', 'SASS', 'Emotion', 'CSS3'],
+    animation: ['Framer Motion'],
+    routing: ['React Router v6'],
+    build: ['Vite', 'Webpack', 'Babel', 'SWC', 'PostCSS'],
+    testing: ['Jest'],
+    backend: ['Express.js', 'Python', 'Flask'],
+    tools: ['Git', 'Docker', 'Axios', 'Day.js', 'ESLint', 'Prettier']
   },
-  close: {
-    width: '0%',
-    justifyContent: 'flex-end'
-  },
-  fullscreen: {
-    width: '100%',
-    justifyContent: 'center'
+  achievements: [
+    'ICPC Far Eastern Russia 2023 — 2nd place',
+    'ICPC Far Eastern Russia 2024 — 10th place',
+    'ICPC Far Eastern Russia 2025 — 3rd place',
+    'ICPC Northern Eurasia Finals 2023, 2025 — Honorable Mention',
+    'Hackathon ДВФУ 2025 — 1st place',
+    'Code Work Challenge 2025'
+  ],
+  available: true
+};
+
+interface JsonObject {
+  [key: string]: JsonValue;
+}
+type JsonArray = Array<JsonValue>;
+type JsonValue = string | number | boolean | JsonObject | JsonArray;
+
+const toJsonString = (data: JsonValue, indent = 0, multilineKeys: string[] = [], multiline = false): string => {
+  const pad = '  '.repeat(indent);
+  const inner = '  '.repeat(indent + 1);
+  if (typeof data !== 'object') return typeof data === 'string' ? `"${data}"` : String(data);
+  if (Array.isArray(data)) {
+    if (multiline)
+      return `[\n${data.map((v) => `${inner}${toJsonString(v, indent + 1, multilineKeys)}`).join(',\n')}\n${pad}]`;
+    return `[${data.map((v) => toJsonString(v, indent + 1, multilineKeys)).join(', ')}]`;
   }
+  const entries = Object.entries(data);
+  return `{\n${entries.map(([k, v], i) => `${inner}"${k}": ${toJsonString(v, indent + 1, multilineKeys, multilineKeys.includes(k))}${i < entries.length - 1 ? ',' : ''}`).join('\n')}\n${pad}}`;
+};
+
+const highlightJson = (text: string): ReactNode[] => {
+  const result: ReactNode[] = [];
+  const tokenRegex = /"(?:[^"\\]|\\.)*"|true|false|null|-?\d+(?:\.\d+)?/g;
+  let lastIndex = 0;
+  let i = 0;
+
+  const push = (content: string, cls: string) =>
+    result.push(
+      <span key={`word-content-${i++}`} className={cls}>
+        {content}
+      </span>
+    );
+
+  let match: RegExpExecArray | null;
+  while ((match = tokenRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) push(text.slice(lastIndex, match.index), 'text-[#D4D4D4]');
+
+    const token = match[0];
+    const isKey =
+      token.startsWith('"') &&
+      text
+        .slice(match.index + token.length)
+        .trimStart()
+        .startsWith(':');
+
+    if (isKey) push(token, 'text-[#9CDCFE]');
+    else if (token.startsWith('"')) push(token, 'text-[#CE9178]');
+    else if (token === 'true' || token === 'false' || token === 'null') push(token, 'text-[#569CD6]');
+    else push(token, 'text-[#B5CEA8]');
+
+    lastIndex = match.index + token.length;
+  }
+
+  if (lastIndex < text.length)
+    result.push(
+      <span key={i++} className="text-[#D4D4D4]">
+        {text.slice(lastIndex)}
+      </span>
+    );
+
+  return result;
+};
+
+const ConsoleVariantsDiv: Variants = {
+  open: { width: '50%' },
+  close: { width: '0%' },
+  fullscreen: { width: '80%' }
 };
 
 const ConsoleVariants: Variants = {
@@ -52,7 +141,8 @@ const ConsoleVariants: Variants = {
     height: '95%',
     borderTopRightRadius: '1rem',
     borderBottomRightRadius: '1rem',
-    width: '80%'
+    width: '90%',
+    marginRight: '2rem'
   },
   collapsed: {
     height: '60%',
@@ -84,31 +174,54 @@ const Console = () => {
     return 'close';
   };
 
+  const consoleRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = consoleRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setInView(true);
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const jsonString = toJsonString(consoleFullScreen ? fullinfo : info, 0, ['achievements']);
+  const { displayed, done } = useTypewriter(jsonString, inView, 4, 16);
+
   return (
     <>
       <motion.button
         className="cursor-pointer w-[30px] flex-1 items-center justify-center pl-1.5"
         onClick={() => setConsoleOpen(true)}
-        initial={false}
+        initial={'hidden'}
         variants={ReturnButtonVariants}
         animate={consoleOpen ? 'hidden' : 'shown'}
       >
         <MdArrowBackIos className="text-[30px] text-card-foreground" />
       </motion.button>
       <motion.div
-        className="flex items-center justify-end"
+        className={`flex items-center overflow-hidden ${consoleFullScreen ? 'justify-center' : 'justify-end'}`}
         initial={false}
         variants={ConsoleVariantsDiv}
         animate={getConsoleVariant(consoleOpen, consoleFullScreen)}
-        transition={{ type: 'tween', ease: 'easeOut', duration: 0.4 }}
+        transition={{ type: 'spring', stiffness: 280, damping: 32 }}
       >
         <motion.div
           className="bg-primary overflow-hidden rounded-tl-2xl rounded-bl-2xl flex justify-end"
           variants={ConsoleVariants}
           initial={false}
           animate={consoleFullScreen ? 'fullscreen' : 'collapsed'}
+          transition={{ type: 'spring', stiffness: 220, damping: 28 }}
         >
-          <div className="h-full w-[99.3%] p-7 pt-0 bg-[rgb(30,30,30)] rounded-tl-2xl rounded-bl-2xl flex flex-col overflow-hidden">
+          <div
+            ref={consoleRef}
+            className="h-full w-[99.3%] p-7 pt-0 bg-[rgb(30,30,30)] rounded-tl-2xl rounded-bl-2xl flex flex-col overflow-hidden"
+          >
             <div className="h-[80px] w-full flex items-center justify-start gap-2">
               <div className="h-4 aspect-square rounded-full bg-red-500 flex items-center justify-center">
                 <div
@@ -144,11 +257,12 @@ const Console = () => {
                   )}
                 </div>
               </div>
-              <div className="text-muted-foreground ml-2">info.json</div>
+              <div className="text-muted-foreground ml-2">{consoleFullScreen ? 'full-info.json' : 'info.json'}</div>
             </div>
             <div className="flex-1 flex items-start justify-start overflow-y-auto">
               <pre className="text-sm">
-                <JsonViewer data={info} multilineKeys={['achievements']} />
+                {highlightJson(displayed)}
+                {!done && <span className="text-white">█</span>}
               </pre>
             </div>
           </div>
