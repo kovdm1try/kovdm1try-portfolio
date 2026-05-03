@@ -3,14 +3,17 @@ import { FaGithub } from 'react-icons/fa';
 import { FaLinkedin } from 'react-icons/fa';
 import { IoIosMail } from 'react-icons/io';
 
+import LaptopScene from '@/app/contacts/LaptopSceneClient';
 import LinkButton from '@/app/contacts/LinkButton';
 
 const ContactsPage = () => {
   return (
     <div className="min-h-screen w-full flex">
       <div className="flex flex-col items-center justify-center p-8">
-        <div className="text-gray-900 font-bold text-[48px] w-full text-left">Связаться со мной</div>
-        <div className="text-muted-foreground text-[24px] w-full text-left mt-[-10px]">Открыт к сотрудничеству</div>
+        <div className="text-gray-900 font-bold text-[32px] sm:text-[48px] w-full text-left">Связаться со мной</div>
+        <div className="text-muted-foreground text-[18px] sm:text-[24px] w-full text-left mt-[-10px]">
+          Открыт к сотрудничеству
+        </div>
         <div className="w-full h-fit mt-10 flex flex-col gap-6">
           <LinkButton
             href={'https://t.me/kovdm1try'}
@@ -38,7 +41,9 @@ const ContactsPage = () => {
           />
         </div>
       </div>
-      <div className="flex-1 bg-amber-950"></div>
+      <div className="flex-1 hidden md:flex">
+        <LaptopScene />
+      </div>
     </div>
   );
 };
