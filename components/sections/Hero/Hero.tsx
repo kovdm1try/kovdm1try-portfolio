@@ -38,9 +38,9 @@ const Hero = () => {
       <motion.div
         variants={ImageVariants}
         transition={{ type: 'spring', stiffness: 200, damping: 30 }}
-        className="z-1 flex items-center justify-center w-[270px] h-[270px] p-[3px] md:w-[412px] md:h-[412px] md:p-[6px] bg-[conic-gradient(from_45deg,color-mix(in_srgb,var(--color-chart-1)_90%,white),var(--color-chart-2),var(--color-chart-3),var(--color-chart-2),var(--color-chart-3),color-mix(in_srgb,var(--color-chart-1)_90%,white))] [box-shadow:0_0_20px_color-mix(in_srgb,var(--color-chart-1)_50%,transparent),0_0_40px_color-mix(in_srgb,var(--color-chart-2)_50%,transparent),0_0_60px_color-mix(in_srgb,var(--color-chart-3)_50%,transparent)] rounded-full"
+        className="z-1 flex items-center justify-center w-[270px] h-[270px] p-[3px] md:w-[412px] md:h-[412px] md:p-[6px] bg-[conic-gradient(from_45deg,color-mix(in_srgb,var(--color-chart-1)_90%,white),var(--color-chart-2),var(--color-chart-3),var(--color-chart-2),var(--color-chart-3),color-mix(in_srgb,var(--color-chart-1)_90%,white))] [box-shadow:0_0_20px_color-mix(in_srgb,var(--color-chart-1)_50%,transparent),0_0_40px_color-mix(in_srgb,var(--color-chart-2)_50%,transparent),0_0_60px_color-mix(in_srgb,var(--color-chart-3)_50%,transparent)] rounded-[50%]"
       >
-        <div className="w-full h-full rounded-full overflow-hidden border-solid">
+        <div className="w-full h-full rounded-[50%] overflow-hidden border-solid">
           <Image src={'/avatar.jpg'} alt="avatar" width={400} height={400} />
         </div>
       </motion.div>
