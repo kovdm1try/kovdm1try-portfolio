@@ -145,14 +145,15 @@ const ConsoleVariants: Variants = {
     marginRight: '1.5rem'
   },
   open: {
-    height: '55vh',
+    height: 'auto',
+    minHeight: '200px',
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
     width: '96%',
     marginRight: 0
   },
   mobileOpen: {
-    height: 'calc(82vh - 60px)',
+    height: 'auto',
     borderTopRightRadius: '1rem',
     borderBottomRightRadius: '1rem',
     width: '100%',
@@ -188,7 +189,15 @@ const Console = () => {
     return 'close';
   };
 
-  const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsMobile(mq.matches);
+    mq.addEventListener('change', update);
+    update();
+    return () => mq.removeEventListener('change', update);
+  }, []);
 
   const consoleRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
@@ -249,7 +258,7 @@ const Console = () => {
         >
           <div
             ref={consoleRef}
-            className="h-full w-[99.3%] p-7 pt-0 bg-[rgb(30,30,30)] rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl rounded-br-2xl md:rounded-tr-none md:rounded-br-none flex flex-col overflow-hidden"
+            className="w-[99.3%] p-7 pt-0 bg-[rgb(30,30,30)] rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl rounded-br-2xl md:rounded-tr-none md:rounded-br-none flex flex-col"
           >
             <div className="h-[80px] w-full flex items-center justify-start gap-2">
               <div className="h-4 aspect-square rounded-full bg-red-500 flex items-center justify-center">

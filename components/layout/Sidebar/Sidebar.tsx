@@ -108,7 +108,7 @@ interface ToggleButtonProps {
 const ToggleButton: FC<ToggleButtonProps> = ({ setOpen }) => {
   return (
     <motion.button
-      className="z-20 h-[60px] w-[60px] flex items-center justify-center rounded-full bg-primary cursor-pointer fixed top-[24px] left-[16px]"
+      className="z-20 h-[44px] w-[44px] md:h-[60px] md:w-[60px] flex items-center justify-center rounded-full bg-primary cursor-pointer fixed top-[16px] left-[12px] md:top-[24px] md:left-[16px]"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       transition={{ type: 'spring', stiffness: 200, damping: 40 }}
@@ -140,26 +140,24 @@ const ToggleButton: FC<ToggleButtonProps> = ({ setOpen }) => {
   );
 };
 
+interface NavCustom {
+  pageHeight: number;
+  cx: number;
+  cy: number;
+  r: number;
+}
+
 const NavigationVariants: Variants = {
-  open: (pageHeight: number = 1000) => ({
+  open: ({ pageHeight = 1000, cx = 46, cy = 54 }: NavCustom) => ({
     pointerEvents: 'auto',
-    clipPath: `circle(${pageHeight * 2}px at 46px 54px)`,
-    transition: {
-      type: 'spring',
-      stiffness: 100,
-      restDelta: 2
-    }
+    clipPath: `circle(${pageHeight * 2}px at ${cx}px ${cy}px)`,
+    transition: { type: 'spring', stiffness: 100, restDelta: 2 }
   }),
-  closed: {
+  closed: ({ cx = 46, cy = 54, r = 2 }: NavCustom) => ({
     pointerEvents: 'none',
-    clipPath: 'circle(20px at 46px 54px)',
-    transition: {
-      type: 'spring',
-      delay: 0.2,
-      stiffness: 200,
-      damping: 40
-    }
-  }
+    clipPath: `circle(${r}px at ${cx}px ${cy}px)`,
+    transition: { type: 'spring', delay: 0.2, stiffness: 200, damping: 40 }
+  })
 };
 
 const ItemsListVariants: Variants = {
@@ -179,7 +177,6 @@ const Navigation: FC<NavigationProps> = ({ setClosed }) => {
   useEffect(() => {
     const ro = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
-
       setMaxSide((prev) => Math.max(prev, width, height));
     });
 
@@ -188,11 +185,23 @@ const Navigation: FC<NavigationProps> = ({ setClosed }) => {
     return () => ro.disconnect();
   }, []);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsMobile(mq.matches);
+    mq.addEventListener('change', update);
+    update();
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  const custom = isMobile ? { pageHeight: maxSide, cx: 34, cy: 38 } : { pageHeight: maxSide, cx: 46, cy: 54 };
+
   return (
     <motion.div
       variants={NavigationVariants}
       className="z-10 overflow-hidden fixed top-0 left-0 w-full h-screen bg-white flex items-center justify-center gap-6"
-      custom={maxSide}
+      custom={custom}
     >
       <motion.ul
         variants={ItemsListVariants}

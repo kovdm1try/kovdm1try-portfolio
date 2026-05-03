@@ -10,6 +10,7 @@ export const useScrollSnap = () => {
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+    if (window.matchMedia('(max-width: 767px)').matches) return;
 
     const getSections = () => Array.from(container.children) as HTMLElement[];
 
