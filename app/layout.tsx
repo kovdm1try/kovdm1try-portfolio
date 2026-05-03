@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
+import PageTransition from '@/components/layout/PageTransition';
 import Sidebar from '@/components/layout/Sidebar';
+import { TransitionProvider } from '@/components/layout/TransitionContext';
 
 import './globals.css';
 
@@ -20,8 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`h-full antialiased`}>
       <body className={`${inter.className} min-h-full flex flex-col`}>
-        <Sidebar />
-        {children}
+        <TransitionProvider>
+          <Sidebar />
+          <PageTransition>{children}</PageTransition>
+        </TransitionProvider>
       </body>
     </html>
   );

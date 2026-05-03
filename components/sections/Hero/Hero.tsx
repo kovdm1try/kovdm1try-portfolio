@@ -1,7 +1,10 @@
+'use client';
+
 import * as motion from 'motion/react-client';
 import { Variants } from 'motion/react';
 import Image from 'next/image';
 
+import { useTransitionReady } from '@/components/layout/TransitionContext';
 import MagneticBackground from '@/components/sections/Hero/MagneticBackground';
 
 const ImageVariants: Variants = {
@@ -27,11 +30,12 @@ const TextVariants: Variants = {
 };
 
 const Hero = () => {
+  const { isReady } = useTransitionReady();
+
   return (
     <motion.div
       initial="hide"
-      whileInView="show"
-      viewport={{ once: true }}
+      animate={isReady ? 'show' : 'hide'}
       className="w-full min-h-screen flex flex-col items-center justify-center relative"
     >
       <MagneticBackground />

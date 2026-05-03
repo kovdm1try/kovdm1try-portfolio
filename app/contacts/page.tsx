@@ -3,18 +3,24 @@ import { FaGithub } from 'react-icons/fa';
 import { FaLinkedin } from 'react-icons/fa';
 import { IoIosMail } from 'react-icons/io';
 
+import ContactButtons from '@/app/contacts/ContactButtons';
 import LaptopScene from '@/app/contacts/LaptopSceneClient';
 import LinkButton from '@/app/contacts/LinkButton';
 
 const ContactsPage = () => {
   return (
-    <div className="min-h-screen w-full flex">
-      <div className="flex flex-col items-center justify-center p-8">
-        <div className="text-gray-900 font-bold text-[32px] sm:text-[48px] w-full text-left">Связаться со мной</div>
-        <div className="text-muted-foreground text-[18px] sm:text-[24px] w-full text-left mt-[-10px]">
+    <div className="min-h-screen w-full relative overflow-hidden">
+      <div className="absolute inset-0 left-1/3 hidden min-[997px]:block -z-10">
+        <LaptopScene />
+      </div>
+      <div className="relative z-10 flex flex-col justify-center p-8 w-full min-[997px]:w-2/5 min-h-screen">
+        <div className="text-gray-900 font-bold text-[32px] sm:text-[48px] w-full text-left max-[996px]:text-center">
+          Связаться со мной
+        </div>
+        <div className="text-muted-foreground text-[18px] sm:text-[24px] w-full text-left mt-[-10px] max-[996px]:text-center">
           Открыт к сотрудничеству
         </div>
-        <div className="w-full h-fit mt-10 flex flex-col gap-6">
+        <ContactButtons>
           <LinkButton
             href={'https://t.me/kovdm1try'}
             text={'Написать в Telegram'}
@@ -39,10 +45,7 @@ const ContactsPage = () => {
             icon={<FaLinkedin />}
             bgColor={'blue-600'}
           />
-        </div>
-      </div>
-      <div className="flex-1 hidden md:flex">
-        <LaptopScene />
+        </ContactButtons>
       </div>
     </div>
   );
