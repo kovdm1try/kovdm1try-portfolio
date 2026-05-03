@@ -5,7 +5,7 @@
     "order/properties-alphabetical-order": true,
     "color-named": "never",
     "declaration-no-important": true,
-    "at-rule-no-unknown": [true, { "ignoreAtRules": ["theme"] }],
+    "at-rule-no-unknown": [true, { "ignoreAtRules": ["theme", "source"] }],
     "import-notation": null
   }
 }
