@@ -1,7 +1,7 @@
-import Hero from '@/components/sections/Hero';
+import Hero from '@/components/sections/Hero/Hero';
 
 const AboutPage = () => {
-  return <Hero imagePath={'/avatar.jpg'} fullname={'Ковтунов Дмитрий Алексеевич'} jobName={'Frontend-разработчик'} />;
+  return <Hero />;
 };
 
 export default AboutPage;
