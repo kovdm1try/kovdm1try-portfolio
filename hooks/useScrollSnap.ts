@@ -19,13 +19,15 @@ export const useScrollSnap = () => {
     const navigateTo = (sections: HTMLElement[], nextIndex: number, currentIndex: number) => {
       if (nextIndex === currentIndex) return;
       isScrolling.current = true;
-      sections[nextIndex].scrollIntoView({ behavior: 'smooth' });
+      container.scrollTo({ top: sections[nextIndex].offsetTop, behavior: 'smooth' });
       setTimeout(() => {
         isScrolling.current = false;
-      }, 400);
+      }, 800);
     };
 
     const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+
       if (isScrolling.current) return;
 
       const sections = getSections();
@@ -35,10 +37,15 @@ export const useScrollSnap = () => {
       const atBottom = currentSection.scrollTop + currentSection.clientHeight >= currentSection.scrollHeight - 1;
       const atTop = currentSection.scrollTop <= 0;
 
-      if (e.deltaY > 0 && !atBottom) return;
-      if (e.deltaY < 0 && !atTop) return;
+      if (e.deltaY > 0 && !atBottom) {
+        currentSection.scrollTop += e.deltaY;
+        return;
+      }
 
-      e.preventDefault();
+      if (e.deltaY < 0 && !atTop) {
+        currentSection.scrollTop += e.deltaY;
+        return;
+      }
 
       const nextIndex = e.deltaY > 0 ? Math.min(currentIndex + 1, sections.length - 1) : Math.max(currentIndex - 1, 0);
 
@@ -53,7 +60,7 @@ export const useScrollSnap = () => {
       if (isScrolling.current) return;
 
       const deltaY = touchStartY.current - e.changedTouches[0].clientY;
-      if (Math.abs(deltaY) < 30) return;
+      if (Math.abs(deltaY) < 100) return;
 
       const sections = getSections();
       const currentIndex = getCurrentIndex(sections);
