@@ -3,8 +3,7 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { FaMinus } from 'react-icons/fa';
 import { FaXmark } from 'react-icons/fa6';
-import { MdCloseFullscreen, MdOutlineOpenInFull } from 'react-icons/md';
-import { MdArrowBackIos } from 'react-icons/md';
+import { MdArrowBackIos, MdCloseFullscreen, MdKeyboardArrowUp, MdOutlineOpenInFull } from 'react-icons/md';
 
 import * as motion from 'motion/react-client';
 import { Variants } from 'motion/react';
@@ -84,7 +83,7 @@ const toJsonString = (data: JsonValue, indent = 0, multilineKeys: string[] = [],
     return `[${data.map((v) => toJsonString(v, indent + 1, multilineKeys)).join(', ')}]`;
   }
   const entries = Object.entries(data);
-  return `{\n${entries.map(([k, v], i) => `${inner}"${k}": ${toJsonString(v, indent + 1, multilineKeys, multilineKeys.includes(k))}${i < entries.length - 1 ? ',' : ''}`).join('\n')}\n${pad}}`;
+  return `{\n${entries.map(([k, v], i) => `${inner}"${k}": ${toJsonString(v, indent + 1, multilineKeys, multilineKeys.includes(k))}${i !== entries.length - 1 ? ',' : ''}`).join('\n')}\n${pad}}`;
 };
 
 const highlightJson = (text: string): ReactNode[] => {
@@ -133,34 +132,49 @@ const highlightJson = (text: string): ReactNode[] => {
 const ConsoleVariantsDiv: Variants = {
   open: { width: '50%' },
   close: { width: '0%' },
-  fullscreen: { width: '80%' }
+  fullscreen: { width: '80%' },
+  mobile: { width: '100%' }
 };
 
 const ConsoleVariants: Variants = {
   fullscreen: {
-    height: '95%',
+    height: '90vh',
     borderTopRightRadius: '1rem',
     borderBottomRightRadius: '1rem',
-    width: '90%',
-    marginRight: '2rem'
+    width: '95%',
+    marginRight: '1.5rem'
   },
-  collapsed: {
-    height: '60%',
+  open: {
+    height: '55vh',
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
-    width: '96%'
+    width: '96%',
+    marginRight: 0
+  },
+  mobileOpen: {
+    height: 'calc(82vh - 60px)',
+    borderTopRightRadius: '1rem',
+    borderBottomRightRadius: '1rem',
+    width: '100%',
+    marginRight: 0
+  },
+  close: {
+    height: 0,
+    borderTopRightRadius: '1rem',
+    borderBottomRightRadius: '1rem',
+    width: '100%',
+    marginRight: 0
   }
 };
 
-const ReturnButtonVariants: Variants = {
-  hidden: {
-    maxWidth: 0,
-    opacity: 0
-  },
-  shown: {
-    maxWidth: 30,
-    opacity: 1
-  }
+const DesktopReturnButtonVariants: Variants = {
+  hidden: { maxWidth: 0, opacity: 0 },
+  shown: { maxWidth: 30, opacity: 1 }
+};
+
+const MobileRestoreButtonVariants: Variants = {
+  hidden: { height: 0, opacity: 0 },
+  shown: { height: 40, opacity: 1 }
 };
 
 const Console = () => {
@@ -173,6 +187,8 @@ const Console = () => {
     if (!consoleOpen && consoleFullscreen) return 'close';
     return 'close';
   };
+
+  const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
 
   const consoleRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
@@ -196,31 +212,44 @@ const Console = () => {
   return (
     <>
       <motion.button
-        className="cursor-pointer w-[30px] flex-1 items-center justify-center pl-1.5"
+        className="hidden md:flex cursor-pointer w-[30px] self-center items-center justify-center pl-1.5"
         onClick={() => setConsoleOpen(true)}
-        initial={'hidden'}
-        variants={ReturnButtonVariants}
+        initial={false}
+        variants={DesktopReturnButtonVariants}
         animate={consoleOpen ? 'hidden' : 'shown'}
+        transition={{ type: 'spring', stiffness: 280, damping: 32 }}
       >
         <MdArrowBackIos className="text-[30px] text-card-foreground" />
       </motion.button>
       <motion.div
-        className={`flex items-center overflow-hidden ${consoleFullScreen ? 'justify-center' : 'justify-end'}`}
+        className="flex flex-col overflow-hidden md:self-center md:items-end items-stretch"
         initial={false}
         variants={ConsoleVariantsDiv}
-        animate={getConsoleVariant(consoleOpen, consoleFullScreen)}
+        animate={isMobile ? 'mobile' : getConsoleVariant(consoleOpen, consoleFullScreen)}
         transition={{ type: 'spring', stiffness: 280, damping: 32 }}
       >
+        <motion.button
+          className="flex md:hidden w-full items-center justify-center cursor-pointer overflow-hidden"
+          onClick={() => setConsoleOpen(true)}
+          initial={false}
+          variants={MobileRestoreButtonVariants}
+          animate={consoleOpen ? 'hidden' : 'shown'}
+          transition={{ type: 'spring', stiffness: 280, damping: 32 }}
+        >
+          <MdKeyboardArrowUp className="text-[30px] text-card-foreground" />
+        </motion.button>
         <motion.div
           className="bg-primary overflow-hidden rounded-tl-2xl rounded-bl-2xl flex justify-end"
           variants={ConsoleVariants}
           initial={false}
-          animate={consoleFullScreen ? 'fullscreen' : 'collapsed'}
+          animate={
+            !consoleOpen && isMobile ? 'close' : isMobile ? 'mobileOpen' : consoleFullScreen ? 'fullscreen' : 'open'
+          }
           transition={{ type: 'spring', stiffness: 220, damping: 28 }}
         >
           <div
             ref={consoleRef}
-            className="h-full w-[99.3%] p-7 pt-0 bg-[rgb(30,30,30)] rounded-tl-2xl rounded-bl-2xl flex flex-col overflow-hidden"
+            className="h-full w-[99.3%] p-7 pt-0 bg-[rgb(30,30,30)] rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl rounded-br-2xl md:rounded-tr-none md:rounded-br-none flex flex-col overflow-hidden"
           >
             <div className="h-[80px] w-full flex items-center justify-start gap-2">
               <div className="h-4 aspect-square rounded-full bg-red-500 flex items-center justify-center">
@@ -245,10 +274,12 @@ const Console = () => {
                   <FaMinus className="text-[10px]" />
                 </div>
               </div>
-              <div className="h-4 aspect-square rounded-full bg-green-500 flex items-center justify-center">
+              <div
+                className={`h-4 aspect-square rounded-full flex items-center justify-center ${isMobile ? 'bg-gray-400' : 'bg-green-500'}`}
+              >
                 <div
-                  className="h-full w-full flex items-center justify-center cursor-pointer text-green-500 hover:text-green-900 transition-colors duration-200"
-                  onClick={() => setConsoleFullScreen((prevState) => !prevState)}
+                  className={`h-full w-full flex items-center justify-center transition-colors duration-200 ${isMobile ? 'cursor-not-allowed text-gray-500' : 'cursor-pointer text-green-500 hover:text-green-900'}`}
+                  onClick={isMobile ? undefined : () => setConsoleFullScreen((prevState) => !prevState)}
                 >
                   {consoleFullScreen ? (
                     <MdCloseFullscreen className="text-[10px]" />
@@ -262,7 +293,7 @@ const Console = () => {
             <div className="flex-1 flex items-start justify-start overflow-y-auto">
               <pre className="text-sm">
                 {highlightJson(displayed)}
-                {!done && <span className="text-white">█</span>}
+                {!done && <span className="text-white">|</span>}
               </pre>
             </div>
           </div>
