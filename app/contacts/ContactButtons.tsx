@@ -22,7 +22,7 @@ const ContactButtons: FC<{ children: ReactNode[] }> = ({ children }) => {
   return (
     <div ref={scope} className="w-full h-fit mt-10 flex flex-col gap-6 max-[996px]:items-center">
       {children.map((child, i) => (
-        <div key={i} className="button-item" style={{ opacity: 0, transform: 'translateY(40px)' }}>
+        <div key={i} className="button-item w-fit sm:w-fit" style={{ opacity: 0, transform: 'translateY(40px)' }}>
           {child}
         </div>
       ))}

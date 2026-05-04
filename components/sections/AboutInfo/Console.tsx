@@ -154,6 +154,7 @@ const ConsoleVariants: Variants = {
   },
   mobileOpen: {
     height: 'auto',
+    minHeight: 0,
     borderTopRightRadius: '1rem',
     borderBottomRightRadius: '1rem',
     width: '100%',
@@ -161,6 +162,7 @@ const ConsoleVariants: Variants = {
   },
   close: {
     height: 0,
+    minHeight: 0,
     borderTopRightRadius: '1rem',
     borderBottomRightRadius: '1rem',
     width: '100%',

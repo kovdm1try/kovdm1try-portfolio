@@ -13,7 +13,7 @@ const ContactsPage = () => {
       <div className="absolute inset-0 left-1/3 hidden min-[997px]:block -z-10">
         <LaptopScene />
       </div>
-      <div className="relative z-10 flex flex-col justify-center p-8 w-full min-[997px]:w-2/5 min-h-screen">
+      <div className="relative z-5 flex flex-col justify-center p-2 sm:p-8 w-full min-[997px]:w-2/5 min-h-screen">
         <div className="text-gray-900 font-bold text-[32px] sm:text-[48px] w-full text-left max-[996px]:text-center">
           Связаться со мной
         </div>
