@@ -9,7 +9,7 @@ const AboutPage = () => {
   const containerRef = useScrollSnap();
 
   return (
-    <div ref={containerRef} className="md:h-screen md:overflow-hidden">
+    <div ref={containerRef} className="md:h-screen md:overflow-y-scroll">
       <div className="md:h-screen md:overflow-y-auto">
         <Hero />
       </div>

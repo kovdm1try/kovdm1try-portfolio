@@ -2,7 +2,7 @@
 
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
-import { FaBriefcase, FaPhone } from 'react-icons/fa';
+import { FaBriefcase, FaPhoneAlt } from 'react-icons/fa';
 import { FaUserCircle } from 'react-icons/fa';
 
 import * as motion from 'motion/react-client';
@@ -21,9 +21,9 @@ interface MenuItemProps {
 type PageProps = Omit<MenuItemProps, 'setClosed'>;
 
 const pages: PageProps[] = [
-  { title: 'About', icon: <FaUserCircle />, href: 'about' },
-  { title: 'Projects', icon: <FaBriefcase />, href: 'projects' },
-  { title: 'Contacts', icon: <FaPhone />, href: 'contacts' }
+  { title: 'Обо мне', icon: <FaUserCircle />, href: 'about' },
+  { title: 'Проекты', icon: <FaBriefcase />, href: 'projects' },
+  { title: 'Контакты', icon: <FaPhoneAlt fontSize={'lg'} />, href: 'contacts' }
 ];
 
 const IconVariant: Variants = {
@@ -53,14 +53,14 @@ const ItemVariants: Variants = {
 const MenuItem: FC<MenuItemProps> = ({ title, icon, href, setClosed }) => {
   const pathname = usePathname();
   const page = pathname.slice(1);
-  const isSamePage = title.toLowerCase() === page;
+  const isSamePage = href === page;
   const [isHover, setIsHover] = useState<boolean>(false);
 
   return (
     <motion.li
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
-      className="w-[250px] h-[50px]"
+      className="w-[200px] h-[38px] md:w-[270px] md:h-[50px]"
       onHoverStart={() => setIsHover(true)}
       onHoverEnd={() => setIsHover(false)}
       onClick={setClosed}
@@ -71,7 +71,7 @@ const MenuItem: FC<MenuItemProps> = ({ title, icon, href, setClosed }) => {
     >
       <Link href={href} className="w-full h-full flex items-center justify-between gap-5">
         <motion.div
-          className={clsx('w-[50px] aspect-square', isSamePage ? 'text-primary' : 'text-black')}
+          className={clsx('w-[32px] md:w-[50px] aspect-square', isSamePage ? 'text-primary' : 'text-black')}
           animate={isHover ? 'hover' : 'idle'}
           transition={{ type: 'spring' }}
           variants={IconVariant}
@@ -80,7 +80,7 @@ const MenuItem: FC<MenuItemProps> = ({ title, icon, href, setClosed }) => {
         </motion.div>
         <div
           className={clsx(
-            'flex-1 text-left h-full font-bold text-[40px] flex items-center',
+            'flex-1 text-left h-full font-bold text-[28px] md:text-[40px] flex items-center',
             isSamePage ? 'text-primary' : 'text-black'
           )}
         >
@@ -225,7 +225,7 @@ const Sidebar = () => {
   return (
     <motion.nav initial={false} animate={isOpen ? 'open' : 'closed'}>
       <ToggleButton setOpen={() => setIsOpen((prev) => !prev)} />
-      <IconContext.Provider value={{ size: 'lg' }}>
+      <IconContext.Provider value={{ className: 'w-full h-full' }}>
         <Navigation setClosed={() => setIsOpen(false)} />
       </IconContext.Provider>
     </motion.nav>
