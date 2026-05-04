@@ -1,9 +1,10 @@
 'use client';
 
-import { Suspense, useEffect, useRef } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 
+import * as motion from 'motion/react-client';
 import * as THREE from 'three';
-import { ContactShadows, Environment } from '@react-three/drei';
+import { ContactShadows } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 
 import { Model } from './Laptop';
@@ -26,7 +27,16 @@ function AnimatedLaptop() {
   );
 }
 
+function OnLoaded({ onLoad }: { onLoad: () => void }) {
+  useEffect(() => {
+    onLoad();
+  }, []);
+  return null;
+}
+
 export default function LaptopScene() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -38,20 +48,26 @@ export default function LaptopScene() {
   }, []);
 
   return (
-    <div className="w-full h-full">
+    <motion.div
+      className="w-full h-full"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isLoaded ? 1 : 0 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
       <Canvas camera={{ position: [0, 2, 8], fov: 45 }}>
         {/* eslint-disable-next-line react/no-unknown-property */}
-        <ambientLight intensity={0.6} />
+        <ambientLight intensity={1.2} />
         {/* eslint-disable-next-line react/no-unknown-property */}
-        <directionalLight position={[5, 5, 5]} intensity={1.5} />
+        <directionalLight position={[5, 8, 5]} intensity={1.5} />
         {/* eslint-disable-next-line react/no-unknown-property */}
-        <directionalLight position={[-5, -2, -3]} intensity={0.3} />
+        <directionalLight position={[-5, 8, 5]} intensity={0.3} />
+
         <Suspense fallback={null}>
-          <Environment preset="night" />
           <AnimatedLaptop />
           <ContactShadows position={[0, -2.6, 0]} opacity={0.4} scale={10} blur={2} />
+          <OnLoaded onLoad={() => setIsLoaded(true)} />
         </Suspense>
       </Canvas>
-    </div>
+    </motion.div>
   );
 }

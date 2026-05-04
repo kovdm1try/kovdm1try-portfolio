@@ -18,7 +18,7 @@ const LinkButton: FC<LinkButtonProps> = ({ href, text, icon, bgColor }) => {
 
   return (
     <motion.div
-      className="w-full sm:w-[350px] h-[54px] sm:h-[70px]"
+      className="w-[250px] sm:w-[350px] h-[54px] sm:h-[70px]"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 1.05 }}
       transition={{ type: 'spring', stiffness: 200, damping: 30 }}
@@ -39,7 +39,7 @@ const LinkButton: FC<LinkButtonProps> = ({ href, text, icon, bgColor }) => {
         >
           {icon}
         </motion.div>
-        <div className="text-white font-semibold text-[16px] sm:text-[24px] flex-1">{text}</div>
+        <div className="text-white font-semibold text-[16px] sm:text-[22px] flex-1">{text}</div>
       </Link>
     </motion.div>
   );
