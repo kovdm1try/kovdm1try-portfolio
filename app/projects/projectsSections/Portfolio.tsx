@@ -1,0 +1,39 @@
+import { FaReact } from 'react-icons/fa';
+import { SiFramer, SiNextdotjs, SiTailwindcss, SiThreedotjs, SiTypescript } from 'react-icons/si';
+
+import ProjectInfo from '@/components/sections/ProjectInfo';
+import PerspectiveGrid from '@/components/ui/PerspectiveGrid';
+
+const stack = [
+  { name: 'Next.js', icon: <SiNextdotjs size={20} color="#000000" /> },
+  { name: 'React', icon: <FaReact size={20} color="#61DAFB" /> },
+  { name: 'TypeScript', icon: <SiTypescript size={20} color="#3178C6" /> },
+  { name: 'Tailwind', icon: <SiTailwindcss size={20} color="#06B6D4" /> },
+  { name: 'Motion', icon: <SiFramer size={20} color="#0055FF" /> },
+  { name: 'Three.js', icon: <SiThreedotjs size={20} color="#000000" /> }
+];
+
+const PortfolioSection = () => {
+  return (
+    <div className="w-full min-h-screen relative overflow-hidden">
+      <PerspectiveGrid />
+      <ProjectInfo
+        textSide={'left'}
+        stack={stack}
+        link={'https://kovdm1try-portfolio.vercel.app/'}
+        repo={'https://github.com/kovdm1try/kovdm1try-portfolio'}
+        name={'kovdm1try-portfolio'}
+        goal={'Личный сайт-портфолио на Next.js'}
+        description={
+          'Минималистичный сайт с посекционной навигацией: about, projects, contacts. Акцент на плавных анимациях и презентации скилов.'
+        }
+        projectNumber={1}
+        projectsCount={2}
+        status={'active'}
+        images={[]}
+      />
+    </div>
+  );
+};
+
+export default PortfolioSection;

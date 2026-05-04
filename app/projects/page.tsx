@@ -1,6 +1,7 @@
 import ScrollButton from '@/components/ui/ScrollButton';
 
 import IntroBg from '@/app/projects/IntroBg';
+import Portfolio from '@/app/projects/projectsSections/Portfolio';
 
 const ProjectsPage = () => {
   return (
@@ -28,6 +29,7 @@ const ProjectsPage = () => {
           <ScrollButton />
         </div>
       </div>
+      <Portfolio />
     </div>
   );
 };
