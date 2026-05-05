@@ -58,7 +58,7 @@ const OutroSection: FC<OutroSectionProps> = ({
             <a
               href={primaryHref}
               rel="noopener noreferrer"
-              className="flex items-center gap-2.5 px-6 py-3 rounded-[24px] bg-primary text-white font-[500] text-[15px] hover:-translate-y-0.5 transition-transform shadow-sm"
+              className="flex w-[200px] items-center justify-center gap-2.5 px-6 py-3 rounded-[24px] bg-primary text-white font-[500] text-[15px] hover:-translate-y-0.5 transition-transform shadow-sm"
             >
               {primaryIcon}
               {primaryLabel}
@@ -66,7 +66,7 @@ const OutroSection: FC<OutroSectionProps> = ({
           ) : (
             <button
               onClick={() => navigateTo(primaryHref)}
-              className="flex items-center gap-2.5 px-6 py-3 rounded-[24px] bg-primary text-white font-[500] text-[15px] hover:-translate-y-0.5 transition-transform shadow-sm cursor-pointer"
+              className="flex w-[200px] items-center justify-center gap-2.5 px-6 py-3 rounded-[24px] bg-primary text-white font-[500] text-[15px] hover:-translate-y-0.5 transition-transform shadow-sm cursor-pointer"
             >
               {primaryIcon}
               {primaryLabel}
@@ -74,7 +74,7 @@ const OutroSection: FC<OutroSectionProps> = ({
           )}
           <button
             onClick={() => navigateTo(secondaryHref)}
-            className="flex items-center gap-2.5 px-6 py-3 rounded-[24px] bg-white text-gray-900 font-[500] text-[15px] border border-[rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-transform shadow-sm cursor-pointer"
+            className="flex w-[200px] items-center justify-center gap-2.5 px-6 py-3 rounded-[24px] bg-white text-gray-900 font-[500] text-[15px] border border-[rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-transform shadow-sm cursor-pointer"
           >
             {secondaryLabel}
             <HiArrowRight size={16} />

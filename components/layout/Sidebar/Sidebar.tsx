@@ -125,7 +125,7 @@ const ToggleButton: FC<ToggleButtonProps> = ({ setOpen }) => {
       transition={{ type: 'spring', stiffness: 200, damping: 40 }}
       onClick={setOpen}
     >
-      <svg width="23" height="23" viewBox="0 0 23 23">
+      <svg width="20" height="20" viewBox="0 0 20 20">
         <Path
           variants={{
             closed: { d: 'M 2 2.5 L 20 2.5' },
