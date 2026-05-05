@@ -3,19 +3,22 @@
 import { FC, ReactNode, useEffect, useRef, useState } from 'react';
 
 import { stagger, useAnimate } from 'motion/react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
-import { useTransitionReady } from './TransitionContext';
+import { useTransitionStore } from '@/store/transitionStore';
 
 const STRIPS = 4;
 const SESSION_KEY = 'hasVisited';
 
 const PageTransition: FC<{ children: ReactNode }> = ({ children }) => {
   const pathname = usePathname();
+  const router = useRouter();
   const [scope, animate] = useAnimate();
   const [showOverlay, setShowOverlay] = useState(true);
   const isFirstVisit = useRef(true);
-  const { setIsReady } = useTransitionReady();
+  const isManualNav = useRef(false);
+
+  const { setReady, pendingHref, clearPending } = useTransitionStore();
 
   useEffect(() => {
     if (sessionStorage.getItem(SESSION_KEY)) {
@@ -25,15 +28,37 @@ const PageTransition: FC<{ children: ReactNode }> = ({ children }) => {
     }
   }, []);
 
+  // реагируем на navigateTo
   useEffect(() => {
-    setIsReady(false);
+    if (!pendingHref) return;
 
     const run = async () => {
+      isManualNav.current = true;
+      clearPending();
       await animate(
         '.strip',
         { y: ['100%', '0%'] },
         { duration: 0.4, ease: [0.76, 0, 0.24, 1], delay: stagger(0.06, { from: 'last' }) }
       );
+      router.push(pendingHref);
+    };
+    run();
+  }, [pendingHref]);
+
+  // реагируем на смену pathname
+  useEffect(() => {
+    setReady(false);
+
+    const run = async () => {
+      if (!isManualNav.current) {
+        await animate(
+          '.strip',
+          { y: ['100%', '0%'] },
+          { duration: 0.4, ease: [0.76, 0, 0.24, 1], delay: stagger(0.06, { from: 'last' }) }
+        );
+      }
+
+      isManualNav.current = false;
 
       if (isFirstVisit.current) {
         sessionStorage.setItem(SESSION_KEY, 'true');
@@ -47,7 +72,7 @@ const PageTransition: FC<{ children: ReactNode }> = ({ children }) => {
         { duration: 0.4, ease: [0.76, 0, 0.24, 1], delay: stagger(0.06, { from: 'last' }) }
       );
 
-      setTimeout(() => setIsReady(true), 450);
+      setTimeout(() => setReady(true), 450);
       await outAnim;
     };
     run();

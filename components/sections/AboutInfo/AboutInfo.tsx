@@ -3,7 +3,7 @@ import Console from '@/components/sections/AboutInfo/Console';
 
 const AboutInfo = () => {
   return (
-    <div className="w-full min-h-screen h-fit flex flex-col md:flex-row relative">
+    <div className="w-full min-h-screen h-fit flex flex-col items-center justify-center md:flex-row md:items-stretch md:justify-start relative">
       <AboutText />
       <Console />
     </div>

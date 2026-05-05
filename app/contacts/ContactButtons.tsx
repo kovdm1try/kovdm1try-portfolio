@@ -4,10 +4,10 @@ import { FC, ReactNode, useEffect } from 'react';
 
 import { stagger, useAnimate } from 'motion/react';
 
-import { useTransitionReady } from '@/components/layout/TransitionContext';
+import { useTransitionStore } from '@/store/transitionStore';
 
 const ContactButtons: FC<{ children: ReactNode[] }> = ({ children }) => {
-  const { isReady } = useTransitionReady();
+  const { isReady } = useTransitionStore();
   const [scope, animate] = useAnimate();
 
   useEffect(() => {

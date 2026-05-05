@@ -3,10 +3,16 @@
 @source inline("{bg,text}-{blue-500,blue-600,gray-900,orange-400}");
 @source inline("bg-[#FC3F1D] text-[#FC3F1D]");
 
+@utility font-jetbrains {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
+
+
 
 :root {
   --font-size: 16px;
@@ -95,6 +101,10 @@
     @apply border-border outline-ring/50;
 
     scrollbar-width: none;
+  }
+
+  *::-webkit-scrollbar {
+    display: none;
   }
 
   body {
