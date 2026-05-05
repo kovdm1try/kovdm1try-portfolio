@@ -8,10 +8,11 @@ import { MdArrowBackIos, MdCloseFullscreen, MdKeyboardArrowUp, MdOutlineOpenInFu
 import * as motion from 'motion/react-client';
 import { Variants } from 'motion/react';
 
+import { useTranslation } from '@/hooks/useTranslation';
 import { useTypewriter } from '@/hooks/useTypewriter';
 
-const info = {
-  name: 'Ковтунов Дмитрий',
+const makeInfo = (name: string) => ({
+  name,
   role: 'Frontend Developer',
   location: 'Vladivostok, Russia',
   studying: 'Applied Math & CS @ FEFU',
@@ -28,15 +29,14 @@ const info = {
     'ICPC Northern Eurasia Finals 2023, 2025 — Honorable Mention'
   ],
   available: true
-};
+});
 
-const fullinfo = {
-  name: 'Ковтунов Дмитрий Алексеевич',
+const makeFullInfo = (name: string) => ({
+  name,
   role: 'Frontend Developer',
   location: 'Vladivostok, Russia',
   studying: 'Applied Math & CS @ FEFU, 2022 — present',
   passion: ['Frontend Development', 'Interactive UI', 'Web Animations'],
-
   experience: [
     {
       company: 'АТБ — Азиатско-Тихоокеанский Банк',
@@ -65,7 +65,7 @@ const fullinfo = {
     'Code Work Challenge 2025'
   ],
   available: true
-};
+});
 
 interface JsonObject {
   [key: string]: JsonValue;
@@ -181,6 +181,7 @@ const MobileRestoreButtonVariants: Variants = {
 };
 
 const Console = () => {
+  const t = useTranslation();
   const [consoleOpen, setConsoleOpen] = useState<boolean>(true);
   const [consoleFullScreen, setConsoleFullScreen] = useState<boolean>(false);
 
@@ -217,7 +218,9 @@ const Console = () => {
     return () => io.disconnect();
   }, []);
 
-  const jsonString = toJsonString(consoleFullScreen ? fullinfo : info, 0, ['achievements']);
+  const jsonString = toJsonString(consoleFullScreen ? makeFullInfo(t.console.fullName) : makeInfo(t.console.name), 0, [
+    'achievements'
+  ]);
   const { displayed, done } = useTypewriter(jsonString, inView, 4, 16);
 
   return (

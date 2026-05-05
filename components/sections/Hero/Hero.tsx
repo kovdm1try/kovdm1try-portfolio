@@ -6,6 +6,8 @@ import Image from 'next/image';
 
 import MagneticBackground from '@/components/sections/Hero/MagneticBackground';
 
+import { useTranslation } from '@/hooks/useTranslation';
+
 import { useTransitionStore } from '@/store/transitionStore';
 
 const ImageVariants: Variants = {
@@ -32,6 +34,7 @@ const TextVariants: Variants = {
 
 const Hero = () => {
   const { isReady } = useTransitionStore();
+  const t = useTranslation();
 
   return (
     <motion.div
@@ -54,14 +57,14 @@ const Hero = () => {
         transition={{ type: 'spring', stiffness: 200, damping: 30 }}
         className="relative z-1 font-bold text-[46px] md:text-[60px] w-full text-center bg-[radial-gradient(var(--color-chart-2)_10%,var(--color-chart-1),var(--color-chart-3))] bg-clip-text text-transparent leading-tight mt-1"
       >
-        Ковтунов Дмитрий
+        {t.hero.name}
       </motion.div>
       <motion.div
         transition={{ type: 'spring', stiffness: 200, damping: 30, delay: 0.07 }}
         variants={TextVariants}
         className="relative z-1 font-semibold text-muted-foreground text-[16px] md:text-[20px]"
       >
-        Frontend-разработчик
+        {t.hero.role}
       </motion.div>
     </motion.div>
   );

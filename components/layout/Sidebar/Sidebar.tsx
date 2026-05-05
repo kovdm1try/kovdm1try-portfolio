@@ -10,6 +10,8 @@ import clsx from 'clsx';
 import { stagger, Variants } from 'motion/react';
 import { usePathname } from 'next/navigation';
 
+import { translations } from '@/lib/translations';
+import { Language, useLanguageStore } from '@/store/languageStore';
 import { useTransitionStore } from '@/store/transitionStore';
 
 interface MenuItemProps {
@@ -21,11 +23,14 @@ interface MenuItemProps {
 
 type PageProps = Omit<MenuItemProps, 'setClosed'>;
 
-const pages: PageProps[] = [
-  { title: 'Обо мне', icon: <FaUserCircle />, href: 'about' },
-  { title: 'Проекты', icon: <FaBriefcase />, href: 'projects' },
-  { title: 'Контакты', icon: <FaPhoneAlt fontSize={'lg'} />, href: 'contacts' }
-];
+const getPages = (lang: Language): PageProps[] => {
+  const t = translations[lang].nav;
+  return [
+    { title: t.about, icon: <FaUserCircle />, href: 'about' },
+    { title: t.projects, icon: <FaBriefcase />, href: 'projects' },
+    { title: t.contacts, icon: <FaPhoneAlt fontSize={'lg'} />, href: 'contacts' }
+  ];
+};
 
 const IconVariant: Variants = {
   hover: {
@@ -177,8 +182,35 @@ interface NavigationProps {
   setClosed: () => void;
 }
 
+const LangToggle: FC = () => {
+  const { language, setLanguage } = useLanguageStore();
+
+  return (
+    <motion.div variants={ItemVariants} className="flex items-center gap-1 select-none">
+      {(['ru', 'en'] as Language[]).map((lang, i) => (
+        <span key={lang} className="flex items-center gap-1">
+          {i > 0 && <span className="text-muted-foreground text-[20px] md:text-[28px] font-light">/</span>}
+          <motion.button
+            onClick={() => setLanguage(lang)}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.92 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+            className={clsx(
+              'font-bold text-[28px] md:text-[40px] cursor-pointer uppercase tracking-wide',
+              language === lang ? 'text-primary' : 'text-black/40 hover:text-black/70'
+            )}
+          >
+            {lang}
+          </motion.button>
+        </span>
+      ))}
+    </motion.div>
+  );
+};
+
 const Navigation: FC<NavigationProps> = ({ setClosed }) => {
   const [maxSide, setMaxSide] = useState<number>(0);
+  const { language } = useLanguageStore();
 
   useEffect(() => {
     const ro = new ResizeObserver(([entry]) => {
@@ -202,6 +234,7 @@ const Navigation: FC<NavigationProps> = ({ setClosed }) => {
   }, []);
 
   const custom = isMobile ? { pageHeight: maxSide, cx: 34, cy: 38 } : { pageHeight: maxSide, cx: 46, cy: 54 };
+  const pages = getPages(language);
 
   return (
     <motion.div
@@ -214,8 +247,11 @@ const Navigation: FC<NavigationProps> = ({ setClosed }) => {
         className="relative z-10 w-full h-[70%] flex flex-col items-center justify-center gap-8"
       >
         {pages.map(({ title, icon, href }) => (
-          <MenuItem title={title} icon={icon} href={href} setClosed={setClosed} key={`nav-link-${title}`} />
+          <MenuItem title={title} icon={icon} href={href} setClosed={setClosed} key={`nav-link-${href}`} />
         ))}
+        <motion.li variants={ItemVariants} className="mt-4">
+          <LangToggle />
+        </motion.li>
       </motion.ul>
     </motion.div>
   );

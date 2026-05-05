@@ -1,8 +1,12 @@
+'use client';
+
 import { FaReact } from 'react-icons/fa';
 import { SiFramer, SiNextdotjs, SiTailwindcss, SiThreedotjs, SiTypescript } from 'react-icons/si';
 
 import ProjectInfo from '@/components/sections/ProjectInfo';
 import PerspectiveGrid from '@/components/ui/PerspectiveGrid';
+
+import { useTranslation } from '@/hooks/useTranslation';
 
 const stack = [
   { name: 'Next.js', icon: <SiNextdotjs size={20} color="#000000" /> },
@@ -15,6 +19,8 @@ const stack = [
 ];
 
 const PortfolioSection = () => {
+  const t = useTranslation();
+
   return (
     <div className="w-full min-h-screen relative overflow-hidden">
       <PerspectiveGrid />
@@ -24,10 +30,8 @@ const PortfolioSection = () => {
         link={'https://kovdm1try-portfolio.vercel.app/'}
         repo={'https://github.com/kovdm1try/kovdm1try-portfolio'}
         name={'kovdm1try-portfolio'}
-        goal={'Личный сайт-портфолио на Next.js'}
-        description={
-          'Минималистичный сайт с посекционной навигацией: about, projects, contacts. Акцент на плавных анимациях и презентации скилов.'
-        }
+        goal={t.portfolio.goal}
+        description={t.portfolio.description}
         projectNumber={1}
         projectsCount={2}
         status={'live'}

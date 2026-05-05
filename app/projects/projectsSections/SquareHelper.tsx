@@ -1,8 +1,12 @@
+'use client';
+
 import { FaReact } from 'react-icons/fa';
 import { SiMui, SiRedux, SiSass, SiTypescript, SiVite } from 'react-icons/si';
 
 import ProjectInfo from '@/components/sections/ProjectInfo';
 import CubesBG from '@/components/ui/CubesBG';
+
+import { useTranslation } from '@/hooks/useTranslation';
 
 const stack = [
   { name: 'React', icon: <FaReact size={20} color="#61DAFB" /> },
@@ -14,6 +18,8 @@ const stack = [
 ];
 
 const SquareHelper = () => {
+  const t = useTranslation();
+
   return (
     <div className="w-full min-h-screen relative overflow-hidden">
       <CubesBG />
@@ -25,10 +31,8 @@ const SquareHelper = () => {
         link={'https://kovdm1try.github.io/square1-helper/#/about'}
         repo={'https://github.com/kovdm1try/square1-helper'}
         name={'Square-1 Helper'}
-        goal={'Справочник алгоритмов и таймер для Square-1'}
-        description={
-          'Веб-приложение для спидкубинга: пошаговые алгоритмы всех этапов сборки, визуализация состояний кубика и встроенный таймер со скрамблером. Состояние на Redux Toolkit, компоненты на MUI.'
-        }
+        goal={t.squareHelper.goal}
+        description={t.squareHelper.description}
         projectNumber={2}
         projectsCount={2}
         status={'live'}
