@@ -4,8 +4,12 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 
 import * as motion from 'motion/react-client';
 
-const ScrollButton = () => (
-  <button className="flex flex-col w-[70px] h-5/6 items-center justify-between cursor-pointer">
+interface ScrollButtonProps {
+  onClick?: () => void;
+}
+
+const ScrollButton = ({ onClick }: ScrollButtonProps) => (
+  <button onClick={onClick} className="flex flex-col w-[70px] h-5/6 items-center justify-between cursor-pointer">
     <span className="text-muted-foreground uppercase h-[28px] md:h-[20px]">Scroll</span>
     <motion.div
       className="w-10 aspect-square bg-white rounded-[20px] shadow"
