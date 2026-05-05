@@ -4,8 +4,9 @@ import * as motion from 'motion/react-client';
 import { Variants } from 'motion/react';
 import Image from 'next/image';
 
-import { useTransitionReady } from '@/components/layout/TransitionContext';
 import MagneticBackground from '@/components/sections/Hero/MagneticBackground';
+
+import { useTransitionStore } from '@/store/transitionStore';
 
 const ImageVariants: Variants = {
   hide: {
@@ -30,7 +31,7 @@ const TextVariants: Variants = {
 };
 
 const Hero = () => {
-  const { isReady } = useTransitionReady();
+  const { isReady } = useTransitionStore();
 
   return (
     <motion.div

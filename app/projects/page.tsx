@@ -1,7 +1,9 @@
 'use client';
 
 import { useRef } from 'react';
+import { SiGithub } from 'react-icons/si';
 
+import OutroSection from '@/components/sections/OutroSection';
 import ScrollButton from '@/components/ui/ScrollButton';
 
 import IntroBg from '@/app/projects/IntroBg';
@@ -24,7 +26,7 @@ const ProjectsPage = () => {
           <IntroBg />
           <div className="h-10" />
           <div className="z-1">
-            <div className="text-muted-foreground w-full text-center text-sm min-[800px]:text-base">{`// PORTFOLIO · 2025 — ${new Date().getFullYear()}`}</div>
+            <div className="font-jetbrains text-muted-foreground w-full text-center text-sm min-[800px]:text-base">{`// PORTFOLIO · 2025 — ${new Date().getFullYear()}`}</div>
             <div className="w-full text-center leading-none mb-3 [word-spacing:0.35em] min-[800px]:[word-spacing:0.6em]">
               <span className="font-[800] text-[52px] min-[800px]:text-[110px] text-gray-900">Мои</span>{' '}
               <span className="font-[800] text-[52px] min-[800px]:text-[110px] text-primary">проекты</span>
@@ -35,7 +37,7 @@ const ProjectsPage = () => {
             <div className="w-full text-center text-[16px] min-[800px]:text-[24px] text-muted-foreground">
               У каждой секции — свой характер, как и у проекта внутри.
             </div>
-            <div className="text-gray-900 mt-6 min-[800px]:mt-10 w-full text-center text-sm min-[800px]:text-base">
+            <div className="font-jetbrains text-gray-900 mt-6 min-[800px]:mt-10 w-full text-center text-sm min-[800px]:text-base">
               <span className="text-muted-foreground">Проектов:</span> 02
             </div>
           </div>
@@ -49,6 +51,19 @@ const ProjectsPage = () => {
       </div>
       <div className={sectionClass}>
         <SquareHelper />
+      </div>
+      <div className={sectionClass}>
+        <OutroSection
+          title="Это"
+          accent="не всё."
+          subtitle="Свежие репозитории и эксперименты — на GitHub."
+          primaryLabel="Открыть GitHub"
+          primaryHref="https://github.com/kovdm1try"
+          primaryIcon={<SiGithub size={16} />}
+          secondaryLabel="Связаться"
+          secondaryHref="/contacts"
+          externalPrimary
+        />
       </div>
     </div>
   );

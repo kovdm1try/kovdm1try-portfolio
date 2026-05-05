@@ -8,8 +8,9 @@ import { FaUserCircle } from 'react-icons/fa';
 import * as motion from 'motion/react-client';
 import clsx from 'clsx';
 import { stagger, Variants } from 'motion/react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
+import { useTransitionStore } from '@/store/transitionStore';
 
 interface MenuItemProps {
   title: string;
@@ -55,6 +56,12 @@ const MenuItem: FC<MenuItemProps> = ({ title, icon, href, setClosed }) => {
   const page = pathname.slice(1);
   const isSamePage = href === page;
   const [isHover, setIsHover] = useState<boolean>(false);
+  const { navigateTo } = useTransitionStore();
+
+  const handleClick = () => {
+    setClosed?.();
+    if (!isSamePage) navigateTo(href);
+  };
 
   return (
     <motion.li
@@ -63,13 +70,12 @@ const MenuItem: FC<MenuItemProps> = ({ title, icon, href, setClosed }) => {
       className="w-[200px] h-[38px] md:w-[270px] md:h-[50px]"
       onHoverStart={() => setIsHover(true)}
       onHoverEnd={() => setIsHover(false)}
-      onClick={setClosed}
       onTapStart={() => setIsHover(true)}
       onTap={() => setIsHover(false)}
       onTapCancel={() => setIsHover(false)}
       variants={ItemVariants}
     >
-      <Link href={href} className="w-full h-full flex items-center justify-between gap-5">
+      <button onClick={handleClick} className="w-full h-full flex items-center justify-between gap-5 cursor-pointer">
         <motion.div
           className={clsx('w-[32px] md:w-[50px] aspect-square', isSamePage ? 'text-primary' : 'text-black')}
           animate={isHover ? 'hover' : 'idle'}
@@ -86,7 +92,7 @@ const MenuItem: FC<MenuItemProps> = ({ title, icon, href, setClosed }) => {
         >
           {title}
         </div>
-      </Link>
+      </button>
     </motion.li>
   );
 };

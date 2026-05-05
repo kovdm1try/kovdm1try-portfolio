@@ -233,7 +233,7 @@ const Console = () => {
         <MdArrowBackIos className="text-[30px] text-card-foreground" />
       </motion.button>
       <motion.div
-        className="flex flex-col overflow-hidden md:self-center md:items-end items-stretch"
+        className="flex flex-col overflow-hidden md:self-center md:items-end items-stretch h-[490px] md:h-auto px-3 md:px-0"
         initial={false}
         variants={ConsoleVariantsDiv}
         animate={isMobile ? 'mobile' : getConsoleVariant(consoleOpen, consoleFullScreen)}
@@ -260,7 +260,7 @@ const Console = () => {
         >
           <div
             ref={consoleRef}
-            className="w-[99.3%] p-7 pt-0 bg-[rgb(30,30,30)] rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl rounded-br-2xl md:rounded-tr-none md:rounded-br-none flex flex-col"
+            className="w-[99.3%] p-4 md:p-7 pt-0 bg-[rgb(30,30,30)] rounded-tl-2xl rounded-bl-2xl rounded-tr-2xl rounded-br-2xl md:rounded-tr-none md:rounded-br-none flex flex-col"
           >
             <div className="h-[80px] w-full flex items-center justify-start gap-2">
               <div className="h-4 aspect-square rounded-[50%] bg-red-500 flex items-center justify-center">

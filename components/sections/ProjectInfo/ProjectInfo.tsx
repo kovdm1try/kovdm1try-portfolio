@@ -11,6 +11,8 @@ interface Tech {
 
 interface ProjectInfoProps {
   textSide: 'left' | 'right';
+  variant?: 'light' | 'dark';
+  imageTheme?: 'light' | 'dark';
   stack: Tech[];
   images: string[];
   link: string;
@@ -25,6 +27,8 @@ interface ProjectInfoProps {
 
 const ProjectInfo: FC<ProjectInfoProps> = ({
   textSide,
+  variant = 'dark',
+  imageTheme = 'light',
   stack,
   images,
   link,
@@ -46,15 +50,16 @@ const ProjectInfo: FC<ProjectInfoProps> = ({
       description={description}
       projectNumber={projectNumber}
       projectsCount={projectsCount}
+      variant={variant}
     />
   );
-  const view = <ViewComponent images={images} status={status} link={link} />;
+  const view = <ViewComponent images={images} status={status} link={link} imageTheme={imageTheme} />;
   const mobileButtons = (
     <Buttons link={link} repo={repo} className="flex md:hidden order-3 w-4/5 pb-10 flex-col self-center" />
   );
 
   return (
-    <div className="absolute inset-0 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">
+    <div className="relative min-h-screen md:absolute md:inset-0 flex flex-col md:flex-row md:overflow-hidden">
       {textSide === 'left' ? (
         <>
           {text}
