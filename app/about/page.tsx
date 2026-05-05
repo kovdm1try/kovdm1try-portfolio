@@ -8,7 +8,7 @@ import OutroSection from '@/components/sections/OutroSection';
 
 import { useTranslation } from '@/hooks/useTranslation';
 
-const sectionClass = 'h-screen overflow-y-auto [scroll-snap-align:start] [scroll-snap-stop:always]';
+const sectionClass = 'min-h-screen overflow-y-auto [scroll-snap-align:start] [scroll-snap-stop:always]';
 
 const AboutPage = () => {
   const t = useTranslation();
