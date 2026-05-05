@@ -153,7 +153,7 @@ const ConsoleVariants: Variants = {
     marginRight: 0
   },
   mobileOpen: {
-    height: '100%',
+    height: 490,
     minHeight: 0,
     borderTopRightRadius: '1rem',
     borderBottomRightRadius: '1rem',
@@ -236,7 +236,7 @@ const Console = () => {
         <MdArrowBackIos className="text-[30px] text-card-foreground" />
       </motion.button>
       <motion.div
-        className="flex flex-col overflow-hidden md:self-center md:items-end items-stretch h-[490px] md:h-auto px-3 md:px-0"
+        className="flex flex-col overflow-hidden md:self-center md:items-end items-stretch md:h-auto px-3 md:px-0"
         initial={false}
         variants={ConsoleVariantsDiv}
         animate={isMobile ? 'mobile' : getConsoleVariant(consoleOpen, consoleFullScreen)}
@@ -253,7 +253,7 @@ const Console = () => {
           <MdKeyboardArrowUp className="text-[30px] text-card-foreground" />
         </motion.button>
         <motion.div
-          className="bg-primary overflow-hidden rounded-tl-2xl rounded-bl-2xl flex justify-end"
+          className="bg-primary overflow-hidden rounded-tl-2xl rounded-bl-2xl flex justify-end mb-4"
           variants={ConsoleVariants}
           initial={false}
           animate={
@@ -304,7 +304,7 @@ const Console = () => {
               </div>
               <div className="text-muted-foreground ml-2">{consoleFullScreen ? 'full-info.json' : 'info.json'}</div>
             </div>
-            <div className="flex-1 flex items-start justify-start overflow-y-auto">
+            <div className="flex-1 flex items-start justify-start md:overflow-y-auto">
               <pre className="text-sm">
                 {highlightJson(displayed)}
                 {!done && <span className="text-white">|</span>}
