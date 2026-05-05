@@ -3,6 +3,8 @@
 import * as motion from 'motion/react-client';
 import { stagger, Variants } from 'motion/react';
 
+import { useTranslation } from '@/hooks/useTranslation';
+
 const containerVariants: Variants = {
   hidden: {},
   show: {
@@ -16,6 +18,8 @@ const itemVariants: Variants = {
 };
 
 const AboutText = () => {
+  const t = useTranslation();
+
   return (
     <motion.div
       className="flex-1 flex flex-col items-center justify-center p-12"
@@ -25,16 +29,16 @@ const AboutText = () => {
       viewport={{ once: true, amount: 0.3 }}
     >
       <motion.div variants={itemVariants} className="font-bold text-[24px] text-muted-foreground w-full text-left">
-        О себе:
+        {t.about.sectionLabel}
       </motion.div>
       <motion.div variants={itemVariants} className="font-bold text-[40px] text-primary w-full text-left mb-4">
-        Олимпиадник и UI-энтузиаст
+        {t.about.headline}
       </motion.div>
       <motion.div variants={itemVariants} className="text-[24px] text-gray-700 w-full text-left">
-        Разрабатываю интерфейсы с вниманием к деталям: анимации, отзывчивый UI, чистая архитектура.
+        {t.about.line1}
       </motion.div>
       <motion.div variants={itemVariants} className="text-[24px] text-gray-700 w-full text-left mt-6">
-        Увлечён интерактивными пользовательскими интерфейсами и современными веб-технологиями.
+        {t.about.line2}
       </motion.div>
     </motion.div>
   );
