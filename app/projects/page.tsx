@@ -12,7 +12,7 @@ import IntroBg from '@/app/projects/IntroBg';
 import Portfolio from '@/app/projects/projectsSections/Portfolio';
 import SquareHelper from '@/app/projects/projectsSections/SquareHelper';
 
-const sectionClass = 'h-screen overflow-y-auto [scroll-snap-align:start] [scroll-snap-stop:always]';
+const sectionClass = 'min-h-screen overflow-y-auto [scroll-snap-align:start] [scroll-snap-stop:always]';
 
 const ProjectsPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
