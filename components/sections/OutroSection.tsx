@@ -57,7 +57,6 @@ const OutroSection: FC<OutroSectionProps> = ({
           {externalPrimary ? (
             <a
               href={primaryHref}
-              target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2.5 px-6 py-3 rounded-[24px] bg-primary text-white font-[500] text-[15px] hover:-translate-y-0.5 transition-transform shadow-sm"
             >

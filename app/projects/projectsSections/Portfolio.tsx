@@ -22,7 +22,7 @@ const PortfolioSection = () => {
   const t = useTranslation();
 
   return (
-    <div className="w-full min-h-screen relative overflow-hidden">
+    <div className="w-full min-h-screen relative md:overflow-hidden">
       <PerspectiveGrid />
       <ProjectInfo
         textSide={'left'}

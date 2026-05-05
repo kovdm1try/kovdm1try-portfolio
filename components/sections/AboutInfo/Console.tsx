@@ -153,7 +153,7 @@ const ConsoleVariants: Variants = {
     marginRight: 0
   },
   mobileOpen: {
-    height: 'auto',
+    height: '100%',
     minHeight: 0,
     borderTopRightRadius: '1rem',
     borderBottomRightRadius: '1rem',

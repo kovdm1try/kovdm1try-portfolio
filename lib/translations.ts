@@ -49,6 +49,10 @@ export const translations = {
       description:
         'Веб-приложение для спидкубинга: пошаговые алгоритмы всех этапов сборки, визуализация состояний кубика и встроенный таймер со скрамблером. Состояние на Redux Toolkit, компоненты на MUI.'
     },
+    projectInfo: {
+      openSite: 'Открыть сайт',
+      repository: 'Репозиторий'
+    },
     contacts: {
       title: 'Связаться со мной',
       subtitle: 'Открыт к сотрудничеству',
@@ -106,6 +110,10 @@ export const translations = {
       goal: 'Algorithm reference and timer for Square-1',
       description:
         'Web app for speedcubing: step-by-step algorithms for all solve stages, cube state visualization, and a built-in timer with scrambler. State via Redux Toolkit, components via MUI.'
+    },
+    projectInfo: {
+      openSite: 'Open site',
+      repository: 'Repository'
     },
     contacts: {
       title: 'Get in touch',
