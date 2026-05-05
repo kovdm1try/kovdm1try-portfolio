@@ -61,9 +61,9 @@ const ViewComponent: FC<ViewComponentProps> = ({ images, status, link, imageThem
               borderColor: isDark ? 'rgba(255,255,255,0.08)' : '#BBB'
             }}
           >
-            <div className="h-[12px] w-[12px] bg-red-500 rounded-full" />
-            <div className="h-[12px] w-[12px] bg-yellow-400 rounded-full" />
-            <div className="h-[12px] w-[12px] bg-green-500 rounded-full" />
+            <div className="h-[12px] w-[12px] bg-red-500 rounded-[6px]" />
+            <div className="h-[12px] w-[12px] bg-yellow-400 rounded-[6px]" />
+            <div className="h-[12px] w-[12px] bg-green-500 rounded-[6px]" />
             <div
               className="flex-1 rounded-[6px] h-[18px] ml-2 px-2 overflow-hidden flex items-center gap-1.5 text-[13px] min-w-0"
               style={{
@@ -99,13 +99,16 @@ const ViewComponent: FC<ViewComponentProps> = ({ images, status, link, imageThem
         >
           <div className="relative h-[8px] w-[8px]">
             <motion.div
-              className={clsx('absolute inset-0 rounded-full', status === 'live' ? 'bg-green-500' : 'bg-red-500')}
+              className={clsx('absolute inset-0 rounded-[4px]', status === 'live' ? 'bg-green-500' : 'bg-red-500')}
               initial={{ scale: 1, opacity: 0 }}
               animate={{ scale: [1, 2.8], opacity: [0.5, 0] }}
               transition={{ duration: 0.5, repeat: Infinity, ease: 'easeOut', repeatDelay: 0.5 }}
             />
             <div
-              className={clsx('relative rounded-full h-full w-full', status === 'live' ? 'bg-green-500' : 'bg-red-500')}
+              className={clsx(
+                'relative rounded-[4px] h-full w-full',
+                status === 'live' ? 'bg-green-500' : 'bg-red-500'
+              )}
             />
           </div>
           <span
