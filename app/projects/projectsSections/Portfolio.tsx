@@ -29,8 +29,13 @@ const PortfolioSection = () => {
         }
         projectNumber={1}
         projectsCount={2}
-        status={'active'}
-        images={[]}
+        status={'live'}
+        images={[
+          '/kovdm1try-portfolio/main.png',
+          '/kovdm1try-portfolio/info.png',
+          '/kovdm1try-portfolio/contacts.png',
+          '/kovdm1try-portfolio/projects.png'
+        ]}
       />
     </div>
   );
