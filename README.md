@@ -1,42 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# kovdm1try-portfolio
 
-## Getting Started
+Personal portfolio website — [kovdm1try-portfolio.vercel.app](https://kovdm1try-portfolio.vercel.app)
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+| Layer | Tech |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript |
+| UI | React 19, Tailwind CSS v4 |
+| Animation | Motion (Framer Motion) v12 |
+| 3D | Three.js, @react-three/fiber, @react-three/drei |
+| State | Zustand |
+| Icons | react-icons |
+| Fonts | Inter, JetBrains Mono (next/font) |
+| Linting | ESLint, Stylelint, Prettier |
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Pages
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **About** — hero with interactive magnetic background, info console with typewriter effect (JSON with skills & achievements)
+- **Projects** — scroll-snap sections: portfolio showcase and Square-1 Helper, each with animated project card and 3D/grid backgrounds
+- **Contacts** — social links with entrance animations, 3D laptop model (desktop only)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features
 
-## Learn More
+- Custom strip page transitions (Zustand-driven, no `<Link>` dependency)
+- 3D scenes lazy-loaded with `dynamic` + `ssr: false`; laptop model skipped entirely on mobile
+- Scroll-snap sectioned pages
+- Responsive: mobile-first, breakpoint at 997px for 3D content
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Dev
 
 ```bash
-npx gltfjsx public/models/laptop.glb -o app/contacts/Laptop.tsx --types --root public
-
-npx @gltf-transform/cli optimize public/models/laptop.glb public/models/laptop.glb --texture-compress webp
+npm run dev       # start dev server
+npm run build     # production build
+npm run lint      # ESLint + Stylelint
+npm run format    # Prettier check
 ```
+

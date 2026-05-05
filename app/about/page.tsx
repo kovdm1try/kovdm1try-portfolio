@@ -1,15 +1,13 @@
-'use client';
-
 import { MdWorkOutline } from 'react-icons/md';
 
 import AboutInfo from '@/components/sections/AboutInfo';
 import Hero from '@/components/sections/Hero/Hero';
 import OutroSection from '@/components/sections/OutroSection';
 
-const sectionClass = 'md:h-screen md:overflow-y-auto md:[scroll-snap-align:start] md:[scroll-snap-stop:always]';
+const sectionClass = 'h-screen overflow-y-auto [scroll-snap-align:start] [scroll-snap-stop:always]';
 
 const AboutPage = () => (
-  <div className="md:h-screen md:overflow-y-scroll md:[scroll-snap-type:y_mandatory] md:[scroll-behavior:smooth]">
+  <div className="h-screen overflow-y-scroll [scroll-snap-type:y_mandatory] [scroll-behavior:smooth]">
     <div className={sectionClass}>
       <Hero />
     </div>
