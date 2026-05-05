@@ -10,7 +10,7 @@ import IntroBg from '@/app/projects/IntroBg';
 import Portfolio from '@/app/projects/projectsSections/Portfolio';
 import SquareHelper from '@/app/projects/projectsSections/SquareHelper';
 
-const sectionClass = 'md:h-screen md:overflow-y-auto md:[scroll-snap-align:start] md:[scroll-snap-stop:always]';
+const sectionClass = 'h-screen overflow-y-auto [scroll-snap-align:start] [scroll-snap-stop:always]';
 
 const ProjectsPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -19,7 +19,7 @@ const ProjectsPage = () => {
   return (
     <div
       ref={containerRef}
-      className="md:h-screen md:overflow-y-scroll md:[scroll-snap-type:y_mandatory] md:[scroll-behavior:smooth]"
+      className="h-screen overflow-y-scroll [scroll-snap-type:y_mandatory] [scroll-behavior:smooth]"
     >
       <div className={sectionClass}>
         <div className="w-full min-h-screen flex flex-col relative items-center justify-between box-border p-2.5">

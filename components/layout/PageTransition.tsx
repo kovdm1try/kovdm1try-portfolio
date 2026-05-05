@@ -87,7 +87,7 @@ const PageTransition: FC<{ children: ReactNode }> = ({ children }) => {
           <div
             key={`strip-${i}`}
             className="strip h-full flex-1 bg-primary"
-            style={{ transform: 'translateY(100%)' }}
+            style={{ transform: 'translateY(100%)', willChange: 'transform' }}
           />
         ))}
       </div>
